@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FUNKI T-Shirts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/home.css">
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <header style="text-align: center; padding: 2rem;">
+    <h1>Hey <%= user.name %>,</h1>
+    <h1>Welcome to <span style="color:#00ffd5;">FUNKI</span></h1>
+    <p style="margin-top: 0.5rem;">Not just T-shirts. You own the dedicated item just made for you.</p>
+    <p style="font-style: italic; font-size: 0.9rem; color: #ccc;">⚠ One item per customer. At a time. Always on time.</p>
+  </header>
+
+  <section class="products">
+    <% for (let product of products) { %>
+      <a href="/funki/product/<%= product.id %>">
+        <div class="card">
+          <img src="<%= product.img %>" alt="<%= product.title %>" />
+          <h3><%= product.title %></h3>
+          <p>₹<%= product.amt %></p>
+
+          <% if (product.isAvailable) { %>
+            <div class="btn-group">
+              <form action="/funki/cart/add/<%= product.id %>" method="POST">
+                <button type="submit" class="btn add-to-cart-btn">Add to Cart</button>
+              </form>
+            </div>
+          <% } else { %>
+            <p class="sold-out">Sold Out</p>
+          <% } %>
+
+        </div>
+      </a>
+    <% } %>
+  </section>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>
