@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FUNKI | Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/profile.css">
+</head>
+<body>
+
+  <%- include('partials/navbar.ejs',{user})  %>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <div class="avatar">
+      <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png" alt="User Avatar">
+    </div>
+
+    <div class="profile-info">
+      <label for="name">Name:</label>
+      <input type="text" id="name" value="<%- user.name %>">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" value="<%- user.email %>">
+
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" value=  <%- `+91-${user.phone}`  %>>
+
+      <label for="home">Home Address:</label>
+      <textarea id="home">Enter your address and save it!</textarea>
+
+      <label for="office">Office Address:</label>
+      <textarea id="office">None</textarea>
+    </div>
+
+    <div class="section-title">❤️ Favorites</div>
+    <div class="favorites">
+      <div class="tag">FUNKI Black Tee</div>
+      <div class="tag">Graphic Hoodie</div>
+      <div class="tag">Oversized White T-Shirt</div>
+    </div>
+
+    <div class="section-title">🎁 Coupons</div>
+    <div class="coupons">
+      <div class="tag">FUNKI50</div>
+      <div class="tag">WELCOME10</div>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>
+ 
