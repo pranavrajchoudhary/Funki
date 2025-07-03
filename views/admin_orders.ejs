@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Orders</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffd1;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1a1a1a;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    th {
+      background: #0ff6f6;
+      color: #000;
+    }
+
+    tr:nth-child(even) {
+      background-color: #2a2a2a;
+    }
+
+    tr:hover {
+      background-color: #333;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #00ffd1;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #00ccaa;
+    }
+    select {
+  padding: 6px;
+  border-radius: 5px;
+  background: #222;
+  color: #fff;
+  border: 1px solid #0ff6f6;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <h1>📦 All Orders</h1>
+
+  <% if (orders.length===0) { %>
+    <p style="text-align: center; color: #ccc;">No orders yet.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            
+            <th>Order ID</th>
+            <th>User Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total (₹)</th>
+            <th>Ordered At</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let order of orders) { %>
+             
+            <tr>
+              <td>
+                <%= order.id %>
+              </td>
+              <td>
+                <%= order.user_name %>
+              </td>
+              <td>
+                <%= order.product_title %>
+              </td>
+              <td>
+                <%= order.quantity %>
+              </td>
+              <td>₹ <%= order.total_amt %>
+              </td>
+              <td>
+                <%= new Date(order.order_time).toLocaleString("en-IN") %>
+              </td>
+              <td>
+                <form action="/admin/orders/<%= order.id %>?_method=PATCH" method="POST">
+                  <select name="status" onchange="this.form.submit()">
+                    <option value="Processing" <%=order.status==="Processing" ? "selected" : "" %>>Processing</option>
+                    <option value="Dispatched" <%=order.status==="Dispatched" ? "selected" : "" %>>Dispatched</option>
+                    <option value="Shipped" <%=order.status==="Shipped" ? "selected" : "" %>>Shipped</option>
+                    <option value="Delivered" <%=order.status==="Delivered" ? "selected" : "" %>>Delivered</option>
+                  </select>
+                </form>
+              </td>
+            </tr>
+
+            <% } %>
+        </tbody>
+      </table>
+      <% } %>
+
+        <div style="text-align: center;">
+          <a href="/funki/admin" class="back-btn">⬅ Back to Admin Panel</a>
+        </div>
+
+</body>
+
+</html>

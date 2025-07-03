@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Product Management | FUNKI.com</title>
+  <link rel="stylesheet" href="/admin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #topBtn {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 30px;
+      z-index: 99;
+      border: none;
+      outline: none;
+      background-color: #0ff6f6;
+      color: #000;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 18px;
+      transition: background 0.3s ease;
+    }
+
+    #topBtn:hover {
+      background-color: #00d6b8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      display: block;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    .stk, .del {
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .del {
+      background-color: #e74c3c;
+      margin-left: 8px;
+    }
+
+    .formContainer {
+      display: none;
+      margin: 1rem 0;
+    }
+
+    .formContainer.open {
+      display: block;
+    }
+
+    .product-form input,
+    .product-form textarea,
+    .product-form button {
+      width: 100%;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .stk, .del {
+        display: block;
+        margin: 6px 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <div class="container">
+    <h1>Manage Products - FUNKI.com</h1>
+    <button id="toggleForm" class="toggleForm">Add New Product</button>
+
+    <div class="formContainer" id="productForm">
+      <form action="/funki/admin/products/add" method="POST" class="product-form">
+        <h2>Add New Product</h2>
+        <input type="text" name="id" placeholder="Product ID" required>
+        <input type="text" name="img" placeholder="IMAGE URL" required>
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Short Description" required></textarea>
+        <textarea name="specifications" placeholder="Specifications (JSON or Text)" required></textarea>
+        <input type="text" name="amt" placeholder="Price/Amount" required>
+        <label style="display: flex;align-items: center;justify-content: center; text-align: center;">
+          Is_Available ?:
+          <input type="checkbox" name="isAvailable" checked>
+        </label>
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
+
+    <h2>Existing Products</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Specifications</th>
+          <th>Amount</th>
+          <th>Available</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach(product=> { %>
+        <tr>
+          <td><%= product.id %></td>
+          <td><%= product.title %></td>
+          <td><%= product.discription %></td>
+          <td><%= product.specifications %></td>
+          <td><%= product.amt %></td>
+          <td><%= product.isAvailable ? 'Yes' : 'No' %></td>
+          <td>
+            <form action="/funki/admin/pro/<%- product.id %>?_method=PATCH" method="POST" style="display:inline;">
+              <% if (product.isAvailable) { %>
+              <button class="stk" style="background: #ff5050;margin-bottom: .2rem;">Mark Out of Stock</button>
+              <% } else { %>
+              <button class="stk" style="background: #00ff7f; margin-bottom: .2rem;">Mark In Stock</button>
+              <% } %>
+            </form>
+             
+            <form action="/funki/admin/pro/<%- product.id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button class="stk  ">Delete this product</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <button id="topBtn" title="Go to top">↑</button>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Toggle add form
+    const btn = document.getElementById('toggleForm');
+    const form = document.getElementById('productForm');
+    btn.addEventListener('click', () => {
+      form.classList.toggle('open');
+    });
+
+    // Go to Top Logic
+    const topBtn = document.getElementById("topBtn");
+
+    window.onscroll = function () {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        topBtn.style.display = "block";
+      } else {
+        topBtn.style.display = "none";
+      }
+    };
+
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>
