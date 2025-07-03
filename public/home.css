@@ -1,0 +1,116 @@
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.2);
+    --shadow: rgba(0, 0, 0, 0.3);
+    --text: #fff;
+    --accent: #00d4ff;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+.sold-out {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+  body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  
+  
+
+  header {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #00d4ff;
+  }
+
+  header p {
+    font-size: 1.2rem;
+    color: #ccc;
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+
+   a{
+    text-decoration: none;
+    color: unset;
+   }
+  .card:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+  }
+
+  .card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .card h3 {
+    margin: 1rem 0 0.5rem;
+  }
+
+  .card p {
+    margin-bottom: 1rem;
+    color: #aaa;
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    background: var(--accent);
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .btn:hover {
+    background: #00aacc;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #aaa;
+  }

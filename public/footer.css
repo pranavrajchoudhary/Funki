@@ -1,0 +1,44 @@
+.funki-footer {
+    display: block;
+    background: #111;
+    color: #ccc;
+    padding: 2rem 1rem 1rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1rem;
+  }
+  
+  .footer-brand h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-links a,
+  .footer-social a {
+    color: #ccc;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .footer-links a:hover,
+  .footer-social a:hover {
+    color: #00ffd5;
+    text-shadow: 0 0 5px #00ffd5;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  

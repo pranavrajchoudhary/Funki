@@ -1,0 +1,184 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(145deg, #1e1e2f, #111);
+    color: #fff;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 213, 0.2);
+}
+
+h1,
+h2 {
+    color: #00ffd5;
+    text-align: center;
+}
+
+.stk {
+    height: fit-content;
+    background-color: rgb(52, 24, 24);
+    color: white;
+    border-radius: 25%;
+    border: 1px solid white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.stk:hover{
+    background-color: red;
+    box-shadow: 0 0 8px red;
+}
+
+.product-form input,
+.product-form textarea,
+.product-form button {
+    
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+form{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.product-form button {
+    background-color: #00ffd5;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.product-form button:hover {
+    background-color: #00cbb0;
+}
+
+table {
+    width: 100%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+}
+
+th,
+td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: left;
+}
+
+th {
+    background-color: #00ffd5;
+    color: #111;
+}
+
+.formContainer {
+    align-items: center;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-in-out, padding 0.3s ease;
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  
+  /* When visible (expanded) */
+  .formContainer.open {
+    max-height: 1000px; /* should be larger than form height */
+    padding: 1rem;
+  }
+
+  .toggleForm{
+    background-color: #1fd4b6;
+    color: white;
+    font-weight: 700;
+    height: 2rem;
+    border-radius:10px;
+    border: 2px solid white;
+  }
+
+  .toggleForm:hover{
+    cursor: pointer;
+    box-shadow: 0 0 8px #fff;
+  }
+
+  input[type=checkbox] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 2px solid #00ffd5;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  input[type=checkbox]:checked {
+    background-color: #00ffd5;
+    box-shadow: 0 0 8px #00ffd5;
+  }
+  
+  input[type=checkbox]:checked::after {
+    content: '✓';
+    color: #000;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    position: absolute;
+    top: 1px;
+    left: 4px;
+  }
+  .checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #00ffd5;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+/* Stylish checkbox */
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00ffd5;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  background-color: #00ffd5;
+  box-shadow: 0 0 8px #00ffd5;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+  top: 0;
+  left: 4px;
+}

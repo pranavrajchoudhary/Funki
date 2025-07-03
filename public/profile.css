@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(145deg, #1e1e2f, #111);
+    color: white;
+  }
+
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .navbar a {
+    color: #f5f5f5;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .navbar a:hover {
+    color: #00ffd5;
+    text-shadow: 0 0 8px #00ffd5;
+  }
+
+  /* Profile card */
+  .profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00ffd5;
+  }
+
+  .profile-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .profile-info label {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .profile-info input,
+  .profile-info textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    resize: none;
+  }
+
+  .profile-info textarea {
+    height: 60px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem;
+    border-bottom: 2px solid #00ffd5;
+    padding-bottom: 0.3rem;
+  }
+
+  .favorites, .coupons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: rgba(0, 255, 213, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    color: #00ffd5;
+  }
+
+  @media (max-width: 600px) {
+    .profile-info {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-info label {
+      text-align: left;
+    }
+}
