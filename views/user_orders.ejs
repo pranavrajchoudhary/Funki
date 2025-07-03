@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Orders | FUNKI</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffd1;
+      margin-bottom: 2rem;
+    }
+
+    .order-card {
+      display: flex;
+      align-items: center;
+      background: #1e1e1e;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 8px rgba(0,255,213,0.1);
+    }
+
+    .order-card img {
+      width: 100px;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+
+    .details {
+      flex: 1;
+    }
+
+    .status {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .Pending { background: #555; color: #ffc107; }
+    .Shipped { background: #007bff; color: #fff; }
+    .Delivered { background: #28a745; color: #fff; }
+  </style>
+</head>
+<body>
+     <%- include('partials/navbar.ejs') %>
+  <h1>Your Orders</h1>
+
+  <% if (orders.length === 0) { %>
+    <p style="text-align:center;">You haven’t placed any orders yet.</p>
+  <% } else { %>
+    <% orders.forEach(order => { %>
+      <div class="order-card">
+        <img src="<%= order.product_img %>" alt="<%= order.product_title %>">
+        <div class="details">
+          <h3><%= order.product_title %></h3>
+          <p>Qty: <%= order.quantity %> | ₹<%= order.total_amt %></p>
+          <p>Ordered on: <%= new Date(order.order_time).toLocaleString("en-IN") %></p>
+          <span class="status <%= order.status %>"><%= order.status %></span>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+  <%- include('partials/footer') %>
+</body>
+</html>
