@@ -2,6 +2,7 @@
 
 **FUNKI.com** is a full-stack E-commerce web application built using **Node.js, Express, MySQL, and Stripe Payments**. The project replicates key functionalities of modern online stores, offering features for both users and admins.
 
+
 ---
 
 ## 🌟 Features
