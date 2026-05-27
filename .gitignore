@@ -1,0 +1,9 @@
+# Node modules should not go to GitHub
+node_modules/
+
+# .env file should be secret
+.env
+
+# Optional: OS junk files
+.DS_Store
+Thumbs.db

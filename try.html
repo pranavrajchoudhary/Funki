@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkedIn Clone</title>
+  <style>
+    :root {
+      --bg-light: #f3f2ef;
+      --bg-dark: #1d2226;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-light: #fff;
+      --card-dark: #2c2f33;
+    }
+
+    body.light {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      transition: all 0.3s ease;
+    }
+
+    header {
+      background: #0077b5;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #navbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #navbar input {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    #toggleBtn {
+      background: white;
+      color: #0077b5;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    #sidebar, #feed, #profileCard {
+      transition: all 0.3s ease;
+    }
+
+    #sidebar, #profileCard {
+      flex: 1 1 250px;
+    }
+
+    #feed {
+      flex: 2 1 500px;
+    }
+
+    .card {
+      background-color: var(--card-light);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    body.dark .card {
+      background-color: var(--card-dark);
+    }
+
+    .profile-pic {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .post {
+      margin-bottom: 20px;
+    }
+
+    .post h4 {
+      margin: 0;
+    }
+
+    .post p {
+      margin-top: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="light">
+
+  <header>
+    <div id="navbar">
+      <strong>LinkedIn</strong>
+      <input type="text" placeholder="Search">
+    </div>
+    <button id="toggleBtn">Dark Mode</button>
+  </header>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="card">
+        <h3>Navigation</h3>
+        <ul>
+          <li>🏠 Home</li>
+          <li>👥 My Network</li>
+          <li>💼 Jobs</li>
+          <li>💬 Messaging</li>
+          <li>🔔 Notifications</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Feed -->
+    <div id="feed">
+      <div class="card">
+        <h3>Create a Post</h3>
+        <textarea style="width:100%; padding:10px;" rows="3" placeholder="Start a post..."></textarea>
+        <button style="margin-top:10px; padding:6px 12px;">Post</button>
+      </div>
+
+      <div class="card post">
+        <h4>Pranav Choudhary</h4>
+        <p>Excited to start my new internship at DRDO!</p>
+      </div>
+
+      <div class="card post">
+        <h4>Kalyani Jha</h4>
+        <p>AI project progress update: Model accuracy 95% and still improving 🚀</p>
+      </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div id="profileCard">
+      <div class="card">
+        <div class="profile-pic"></div>
+        <h4>Your Name</h4>
+        <p>Student | Developer | Learner</p>
+        <button style="margin-top:10px; padding:6px 12px;">View Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      body.classList.toggle('light');
+      toggleBtn.innerText = body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+    });
+  </script>
+</body>
+</html>

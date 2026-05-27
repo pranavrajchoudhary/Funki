@@ -2,204 +2,362 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title><%- product.title %> | FUNKI.com</title>
-  <link rel="stylesheet" href="/css/product.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: #121212;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<title><%- product.title %> | FUNKI.com</title>
+<link rel="stylesheet" href="/css/product.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .product-container {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
+<style>
 
-    .product-card {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      background: #1e1e1e;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 0 12px rgba(0, 255, 213, 0.1);
-    }
+body{
+margin:0;
+background:#121212;
+font-family:'Segoe UI',sans-serif;
+color:#fff;
+}
 
-    .product-card img {
-      max-width: 100%;
-      width: 300px;
-      border-radius: 10px;
-      border: 2px solid #00ffd5;
-    }
+.product-container{
+padding:2rem;
+max-width:1000px;
+margin:auto;
+}
 
-    .product-details {
-      flex: 1;
-      min-width: 250px;
-    }
+.product-card{
+display:flex;
+flex-wrap:wrap;
+gap:2rem;
+background:#1e1e1e;
+padding:2rem;
+border-radius:15px;
+box-shadow:0 0 12px rgba(0,255,213,0.1);
+}
 
-    .product-details h1 {
-      font-size: 2rem;
-      color: #00ffd5;
-      margin-bottom: 0.5rem;
-    }
+.product-card img{
+max-width:100%;
+width:300px;
+border-radius:10px;
+border:2px solid #00ffd5;
+}
 
-    .product-price {
-      font-size: 1.5rem;
-      margin: 1rem 0;
-    }
+.product-details{
+flex:1;
+min-width:250px;
+}
 
-    .available {
-      color: #0f0;
-    }
+.product-details h1{
+font-size:2rem;
+color:#00ffd5;
+margin-bottom:0.5rem;
+}
 
-    .not-available {
-      color: #f00;
-    }
+.product-price{
+font-size:1.5rem;
+margin:1rem 0;
+}
 
-    .product-actions {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+.available{
+color:#0f0;
+}
 
-    .btn {
-      padding: 0.7rem 1.5rem;
-      border: none;
-      border-radius: 10px;
-      background: #00ffd5;
-      color: #000;
-      cursor: pointer;
-      transition: 0.3s;
-      font-weight: bold;
-    }
+.not-available{
+color:#f00;
+}
 
-    .btn:hover {
-      box-shadow: 0 0 10px #00ffd5;
-    }
+.product-actions{
+margin-top:1.5rem;
+display:flex;
+flex-wrap:wrap;
+gap:1rem;
+}
 
-    .feedback-section {
-      margin-top: 3rem;
-      background: #1a1a1a;
-      padding: 1.5rem;
-      border-radius: 10px;
-    }
+.btn{
+padding:0.7rem 1.5rem;
+border:none;
+border-radius:10px;
+background:#00ffd5;
+color:#000;
+cursor:pointer;
+transition:.3s;
+font-weight:bold;
+}
 
-    .feedback-section h2 {
-      margin-bottom: 1rem;
-      color: #00ffd5;
-    }
+.btn:hover{
+box-shadow:0 0 10px #00ffd5;
+}
 
-    .feedback-section textarea {
-      width: 100%;
-      height: 100px;
-      border-radius: 10px;
-      padding: 1rem;
-      background: #2b2b2b;
-      color: #fff;
-      border: none;
-      margin-bottom: 1rem;
-    }
+.product-specs{
+font-family:monospace;
+background:#2a2a2a;
+padding:1rem;
+border-radius:6px;
+white-space:pre-wrap;
+word-wrap:break-word;
+word-break:break-word;
+overflow-wrap:break-word;
+max-width:100%;
+overflow-x:auto;
+}
 
-    .product-specs {
-      font-family: monospace;
-      background: #2a2a2a;
-      padding: 1rem;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      word-break: break-word;
-      overflow-wrap: break-word;
-      max-width: 100%;
-      overflow-x: auto;
-    }
+.feedback-section{
+margin-top:3rem;
+background:#1a1a1a;
+padding:1.5rem;
+border-radius:10px;
+}
 
-    .feedback .user-name {
-      font-weight: bold;
-      margin-top: 1rem;
-    }
+.feedback-section h2{
+margin-bottom:1rem;
+color:#00ffd5;
+}
 
-    form {
-      display: inline;
-    }
+.review-form{
+margin-bottom:30px;
+}
 
-    @media (max-width: 768px) {
-      .product-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
+.review-form form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
 
-      .product-actions {
-        justify-content: center;
-      }
+.rating-select{
+padding:12px;
+border-radius:10px;
+background:#2b2b2b;
+color:white;
+border:none;
+}
 
-      .product-card img {
-        width: 90%;
-        max-width: 280px;
-      }
-    }
-  </style>
+.review-form textarea{
+width:100%;
+min-height:100px;
+padding:15px;
+border-radius:10px;
+background:#2b2b2b;
+color:white;
+border:none;
+resize:none;
+box-sizing:border-box;
+}
+
+.feedback{
+margin-top:20px;
+padding:15px;
+background:#252525;
+border-left:4px solid #00ffd5;
+border-radius:12px;
+}
+
+.feedback .user-name{
+font-weight:bold;
+}
+
+.user-rating{
+color:gold;
+font-size:18px;
+margin:8px 0;
+}
+
+.feedback small{
+color:#aaa;
+display:block;
+margin-top:8px;
+}
+
+form{
+display:inline;
+}
+
+@media(max-width:768px){
+
+.product-card{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.product-actions{
+justify-content:center;
+}
+
+.product-card img{
+width:90%;
+max-width:280px;
+}
+
+.review-form textarea{
+font-size:14px;
+}
+
+.rating-select{
+width:100%;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
-  <%- include('partials/navbar.ejs') %>
-  <main class="product-container">
-    <div class="product-card">
-      <div>
-        <img src="<%- product.img %>" alt="<%= product.title %>">
-      </div>
-      <div class="product-details">
-        <h1><%= product.title %></h1>
-        <p class="product-id">Product ID: <%- product.id %></p>
-        <p class="product-desc"><%= product.discription %></p>
-        <p class="product-specs"><%= product.specifications %></p>
-        <p class="product-price">₹ <%= product.amt %></p>
-        <p class="availability">
-          <% if(product.isAvailable) { %>
-            <span class="available">In Stock</span>
-          <% } else { %>
-            <span class="not-available">Out of Stock</span>
-          <% } %>
-        </p>
 
-        <div class="product-actions">
-          <form action="/funki/cart/add/<%- product.id %>" method="POST">
-            <button type="submit" class="btn add-to-cart-btn">Add to Cart</button>
-          </form>
-          <form action="/funki/cart/add/<%- product.id %>" method="POST">
-            <button type="submit" class="btn buy">Buy Now</button>
-          </form>
-        </div>
-      </div>
-    </div>
+<%- include('partials/navbar.ejs') %>
 
-    <section class="feedback-section">
-      <h2>Customer Feedback</h2>
+<main class="product-container">
 
-      <div class="feedback">
-        <p class="user-name">🧑 Raju says:</p>
-        <p class="user-text">"Loved the quality and fast delivery. Highly recommend!"</p>
-      </div>
+<div class="product-card">
 
-      <div class="feedback">
-        <p class="user-name">👨 Vineet says:</p>
-        <p class="user-text">"Impressive specs for the price. Will buy again."</p>
-      </div>
+<div>
+<img src="<%- product.img %>" alt="<%= product.title %>">
+</div>
 
-      <div class="feedback">
-        <p class="user-name">👦 Vihaan says:</p>
-        <p class="user-text">"Customer service was helpful. Overall good experience."</p>
-      </div>
-    </section>
-  </main>
+<div class="product-details">
 
-  <%- include('partials/footer') %>
+<h1><%= product.title %></h1>
+
+<p class="product-id">
+Product ID: <%- product.id %>
+</p>
+
+<p class="product-desc">
+<%= product.discription %>
+</p>
+
+<p class="product-specs">
+<%= product.specifications %>
+</p>
+
+<p class="product-price">
+₹ <%= product.amt %>
+</p>
+
+<p class="availability">
+
+<% if(product.isAvailable){ %>
+
+<span class="available">
+In Stock
+</span>
+
+<% } else { %>
+
+<span class="not-available">
+Out of Stock
+</span>
+
+<% } %>
+
+</p>
+
+<div class="product-actions">
+
+<form action="/funki/cart/add/<%- product.id %>" method="POST">
+<button type="submit" class="btn">
+Add to Cart
+</button>
+</form>
+
+<form action="/funki/cart/add/<%- product.id %>" method="POST">
+<button type="submit" class="btn">
+Buy Now
+</button>
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<section class="feedback-section">
+
+<h2>Customer Reviews</h2>
+
+<div class="review-form">
+
+<form action="/funki/review/<%= product.id %>" method="POST">
+
+<select name="rating" required class="rating-select">
+
+<option value="">Choose Rating</option>
+
+<option value="1">⭐</option>
+<option value="2">⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="5">⭐⭐⭐⭐⭐</option>
+
+</select>
+
+<textarea
+name="review"
+placeholder="Write your review..."
+required
+></textarea>
+
+<button type="submit" class="btn">
+Submit Review
+</button>
+
+</form>
+
+</div>
+
+
+ 
+
+
+<% if(reviews.length===0){ %>
+
+<div class="feedback">
+
+<p>No reviews yet</p>
+
+</div>
+
+<% } %>
+
+
+<% reviews.forEach(r=>{ %>
+
+<div class="feedback">
+
+<p class="user-name">
+
+🧑 <%=r.name%>
+
+</p>
+
+<p class="user-rating">
+
+<%= "⭐".repeat(r.rating) %>
+
+</p>
+
+<p>
+
+"<%=r.review%>"
+
+</p>
+
+<small>
+
+<%=r.created_at%>
+
+</small>
+
+</div>
+
+<% }) %>
+
+</section>
+
+</main>
+
+<%- include('partials/footer') %>
+
 </body>
 
 </html>

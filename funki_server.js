@@ -20,15 +20,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.set('trust proxy',1);
+
 app.use(session({
-secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-  secure: process.env.NODE_ENV === 'production',
-  maxAge: 1000 * 60 * 60 * 24 * 3  // 3 days
-}
-
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 1000 * 60 * 60 * 24 * 3
+    }
 }));
 
 // MySQL Connection
@@ -36,7 +39,8 @@ const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: process.env.DB_NAME,
-    password: process.env.DB_PASS
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT
 });
 
 
@@ -160,14 +164,64 @@ app.get("/funki/home", isAuthenticated, (req, res) => {
 // Single Product Page
 app.get("/funki/product/:id", isAuthenticated, (req, res) => {
     const { id } = req.params;
-    const query = "SELECT * FROM product WHERE id = ?";
 
-    connection.query(query, [id], (err, result) => {
-        if (err || result.length === 0) {
+    const productQuery =
+    "SELECT * FROM product WHERE id=?";
+
+    const reviewQuery=`
+    SELECT r.*,u.name
+    FROM reviews r
+    JOIN user u
+    ON r.user_id=u.id
+    WHERE product_id=?
+    ORDER BY created_at DESC
+    `;
+
+    connection.query(productQuery,[id],(err,result)=>{
+
+        if(err || result.length===0){
             return res.status(404).send("Product not found");
         }
-        res.render("product.ejs", { product: result[0] });
+
+        connection.query(reviewQuery,[id],(err,reviews)=>{
+
+            res.render("product.ejs",{
+                product:result[0],
+                reviews
+            });
+
+        });
+
     });
+
+});
+
+app.post("/funki/review/:productId",isAuthenticated,(req,res)=>{
+
+const productId=req.params.productId;
+const userId=req.session.user.id;
+
+const {rating,review}=req.body;
+
+const query=`
+INSERT INTO reviews
+(user_id,product_id,rating,review)
+VALUES(?,?,?,?)
+`;
+
+connection.query(
+query,
+[userId,productId,rating,review],
+(err)=>{
+
+if(err){
+console.log(err);
+}
+
+res.redirect(`/funki/product/${productId}`);
+
+});
+
 });
 
 // User Profile
@@ -177,27 +231,31 @@ app.get("/funki/profile", isAuthenticated, (req, res) => {
 app.get("/funki/contact", isAuthenticated,(req, res) => {
     res.render("ctc.ejs");
 });
-// =======================
-// Cart Routes
-// =======================
+
 
 // View Cart
 app.get("/funki/cart", isAuthenticated, (req, res) => {
     const userId = req.session.user.id;
+
     const query = `
-        SELECT p.id, p.title, p.amt, p.img, p.isAvailable, c.quantity 
-        FROM product p 
-        JOIN cart c ON p.id = c.product_id 
-        WHERE c.user_id = ?
+        SELECT p.id, p.title, p.amt, p.img,
+        p.isAvailable,c.quantity
+        FROM product p
+        JOIN cart c ON p.id=c.product_id
+        WHERE c.user_id=?
     `;
 
-    connection.query(query, [userId], (err, cartItems) => {
-        if (err) return res.redirect('/funki/home');
-        res.render("cart.ejs", { cartItems, user: req.session.user });
+    connection.query(query,[userId],(err,cartItems)=>{
+        if(err) return res.redirect('/funki/home');
+
+        res.render("cart.ejs",{
+            cartItems,
+            user:req.session.user
+        });
     });
 });
 
-// Add to cart (overwrites previous)
+
 app.post("/funki/cart/add/:productId", isAuthenticated, (req, res) => {
     const userId = req.session.user.id;
     const productId = req.params.productId;
@@ -216,20 +274,7 @@ app.post("/funki/cart/add/:productId", isAuthenticated, (req, res) => {
 });
 
 // View Cart
-app.get("/funki/cart", isAuthenticated, (req, res) => {
-    const userId = req.session.user.id;
-    const query = `
-        SELECT p.id, p.title, p.amt, p.img, p.isAvailable 
-        FROM product p 
-        JOIN cart c ON p.id = c.product_id 
-        WHERE c.user_id = ?
-    `;
-
-    connection.query(query, [userId], (err, cartItems) => {
-        if (err) return res.redirect("/funki/home");
-        res.render("cart.ejs", { cartItems, user: req.session.user });
-    });
-});
+ 
 
 
 // Remove from Cart
@@ -242,6 +287,43 @@ app.post("/funki/cart/remove/:productId", isAuthenticated, (req, res) => {
 });
 
 
+// app.post("/checkout", isAuthenticated, (req, res) => {
+//     const userId = req.session.user.id;
+
+//     const getCart = `
+//         SELECT p.id AS product_id, p.title, p.amt
+//         FROM cart c JOIN product p ON p.id = c.product_id
+//         WHERE c.user_id = ?
+//     `;
+
+//     connection.query(getCart, [userId], async (err, items) => {
+//         if (err || items.length === 0) return res.redirect("/funki/cart");
+
+//         const product = items[0];
+//         const amount = product.amt * 100; // ₹ => paise
+
+//         const session = await stripe.checkout.sessions.create({
+//             payment_method_types: ["card"],
+//             line_items: [{
+//                 price_data: {
+//                     currency: "inr",
+//                     product_data: {
+//                         name: product.title,
+//                     },
+//                     unit_amount: amount
+//                 },
+//                 quantity: 1
+//             }],
+//             mode: "payment",
+//             success_url: `http://localhost:2000/payment-success?...`,
+// cancel_url: `http://localhost:2000/funki/cart`
+
+//         });
+
+//         res.redirect(session.url);
+//     });
+// });
+
 app.post("/checkout", isAuthenticated, (req, res) => {
     const userId = req.session.user.id;
 
@@ -255,7 +337,7 @@ app.post("/checkout", isAuthenticated, (req, res) => {
         if (err || items.length === 0) return res.redirect("/funki/cart");
 
         const product = items[0];
-        const amount = product.amt * 100; // ₹ => paise
+        const amount = product.amt * 100;  
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -270,45 +352,8 @@ app.post("/checkout", isAuthenticated, (req, res) => {
                 quantity: 1
             }],
             mode: "payment",
-            success_url: `http://localhost:2000/payment-success?...`,
-cancel_url: `http://localhost:2000/funki/cart`
-
-        });
-
-        res.redirect(session.url);
-    });
-});
-
-app.post("/checkout", isAuthenticated, (req, res) => {
-    const userId = req.session.user.id;
-
-    const getCart = `
-        SELECT p.id AS product_id, p.title, p.amt
-        FROM cart c JOIN product p ON p.id = c.product_id
-        WHERE c.user_id = ?
-    `;
-
-    connection.query(getCart, [userId], async (err, items) => {
-        if (err || items.length === 0) return res.redirect("/funki/cart");
-
-        const product = items[0];
-        const amount = product.amt * 100; // ₹ => paise
-
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ["card"],
-            line_items: [{
-                price_data: {
-                    currency: "inr",
-                    product_data: {
-                        name: product.title,
-                    },
-                    unit_amount: amount
-                },
-                quantity: 1
-            }],
-            mode: "payment",
-            success_url: `http://localhost:2000/payment-success?pid=${product.product_id}`,
-            cancel_url: `http://localhost:2000/funki/cart`
+            success_url: `${process.env.BASE_URL}/payment-success?pid=${product.product_id}`,
+            cancel_url: `${process.env.BASE_URL}/funki/cart`
         });
 
         res.redirect(session.url);
@@ -462,5 +507,5 @@ app.use((req, res) => {
 
 // Start Server
 app.listen(port, () => {
-    console.log(`Funki.com server is running at http://localhost:${port}`);
+    console.log(`Funki.com server is running at ${port}`);
 });
