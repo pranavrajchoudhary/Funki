@@ -83,4 +83,4 @@ Use these dummy card details during checkout:
 
 ## 🔗 Live Demo
 
-Coming soon
+https://funki-z0ze.onrender.com/ 
